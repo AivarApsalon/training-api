@@ -11,9 +11,6 @@ public class MuscleGroup {
     @Column
     private String name;
 
-    @ManyToOne
-    private Muscle muscle;
-
 
     public String getName() {
         return name;

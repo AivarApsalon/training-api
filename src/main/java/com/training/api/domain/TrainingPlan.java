@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class TrainingPlan {
     @Id
     @GeneratedValue
-    private String id;
+    private int id;
 
     @Column
     private String name;

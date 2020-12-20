@@ -7,8 +7,8 @@ import java.util.Objects;
 public class Exercise {
 
     @Id
-    @GeneratedValue()
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Column
     private String name;
@@ -19,9 +19,6 @@ public class Exercise {
 
     @Column(length = 5000)
     private String description;
-
-    @ManyToOne
-    private ExerciseCategory exerciseCategory;
 
     public String getName() {
         return name;
@@ -54,16 +51,6 @@ public class Exercise {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Exercise exercise = (Exercise) o;
-        return id.equals(exercise.id) &&
-                name.equals(exercise.name) &&
-                description.equals(exercise.description);
     }
 
     @Override

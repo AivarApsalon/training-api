@@ -7,10 +7,13 @@ public class ExerciseCategory {
 
     @Id
     @GeneratedValue
-    private String id;
+    private int id;
 
     @Column
     private String name;
+
+    @ManyToOne
+    private Exercise exercise;
 
 
     public String getName() {
