@@ -1,23 +1,27 @@
 package com.training.api.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 public class Exercise {
 
     @Id
-    @GeneratedValue
-    String id;
+    @GeneratedValue()
+    private String id;
 
     @Column
     private String name;
 
+    @Column
+    @Enumerated
+    private Level level;
+
     @Column(length = 5000)
     private String description;
+
+    @ManyToOne
+    private ExerciseCategory exerciseCategory;
 
     public String getName() {
         return name;
@@ -33,6 +37,14 @@ public class Exercise {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     @Override
