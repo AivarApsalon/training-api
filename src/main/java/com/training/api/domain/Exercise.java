@@ -20,6 +20,11 @@ public class Exercise {
     @Column(length = 5000)
     private String description;
 
+    public Exercise(String name, Level level) {
+        this.name = name;
+        this.level = level;
+    }
+
     public String getName() {
         return name;
     }

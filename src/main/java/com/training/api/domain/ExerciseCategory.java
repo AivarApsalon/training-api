@@ -12,7 +12,7 @@ public class ExerciseCategory {
     @Column
     private String name;
 
-    @ManyToOne
+    @OneToMany
     private Exercise exercise;
 
 
