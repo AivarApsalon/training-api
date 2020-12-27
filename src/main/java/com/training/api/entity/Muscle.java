@@ -1,14 +1,17 @@
-package com.training.api.domain;
+package com.training.api.entity;
+
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 
 @Entity
-public class ExerciseType {
+public class Muscle {
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Column
+    @NotNull
     private String name;
 
     public String getName() {

@@ -1,12 +1,12 @@
-package com.training.api.domain;
+package com.training.api.entity;
 
 import javax.persistence.*;
 
 @Entity
 public class MuscleGroup {
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Column
     private String name;
