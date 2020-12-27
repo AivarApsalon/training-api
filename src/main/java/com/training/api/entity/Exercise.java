@@ -1,8 +1,11 @@
 package com.training.api.entity;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -33,6 +36,16 @@ public class Exercise {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created")
+    private Date createDate;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated")
+    private Date modifyDate;
 
     public Exercise() {
     }
