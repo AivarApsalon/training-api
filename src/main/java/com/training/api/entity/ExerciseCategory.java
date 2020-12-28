@@ -1,12 +1,14 @@
 package com.training.api.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Data
 @Entity
 public class ExerciseCategory {
 
@@ -23,23 +25,6 @@ public class ExerciseCategory {
 
     public ExerciseCategory() {
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 
     @Override
     public boolean equals(Object o) {

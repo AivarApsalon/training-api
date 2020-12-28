@@ -1,6 +1,8 @@
 package com.training.api.service;
 
 import com.training.api.entity.Exercise;
+import com.training.api.entity.ExerciseCategory;
+import com.training.api.payload.ExerciseRequest;
 import com.training.api.repository.ExerciseCategoryRepository;
 import com.training.api.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,12 @@ public class ExerciseService {
         this.exerciseCategoryRepository = exerciseCategoryRepository;
     }
 
-    public void createExercise(Exercise exerciseDto) {
-//        Exercise newExercise = new Exercise(exerciseDto.getName(), exerciseDto.getLevel(), exerciseDto.getDescription(), exerciseDto.getExerciseCategory());
-//        exerciseRepository.save(newExercise);
+    public Exercise createExercise(ExerciseRequest exerciseRequest) {
+        ExerciseCategory category = this.exerciseCategoryRepository
+                .findById(exerciseRequest.getCategoryId())
+                .orElseThrow();
+        Exercise exercise = new Exercise(exerciseRequest.getName(), exerciseRequest.getLevel(), exerciseRequest.getDescription());
+        exercise.setExerciseCategory(category);
+        return this.exerciseRepository.save(exercise);
     }
 }

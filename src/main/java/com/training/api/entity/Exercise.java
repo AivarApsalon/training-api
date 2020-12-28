@@ -1,6 +1,8 @@
 package com.training.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Data
 @Entity
 public class Exercise {
 
@@ -27,13 +30,14 @@ public class Exercise {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "exercise_category_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ExerciseCategory exerciseCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 
@@ -47,47 +51,13 @@ public class Exercise {
     @Column(name = "updated")
     private Date modifyDate;
 
-    public Exercise() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Exercise(String name, Level level, String description) {
         this.name = name;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
         this.level = level;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
     }
 
-    public ExerciseCategory getExerciseCategory() {
-        return exerciseCategory;
-    }
-
-    public void setExerciseCategory(ExerciseCategory exerciseCategory) {
-        this.exerciseCategory = exerciseCategory;
-    }
-
-    public TrainingPlan getTrainingPlan() {
-        return trainingPlan;
-    }
-
-    public void setTrainingPlan(TrainingPlan trainingPlan) {
-        this.trainingPlan = trainingPlan;
+    public Exercise() {
     }
 
     @Override
