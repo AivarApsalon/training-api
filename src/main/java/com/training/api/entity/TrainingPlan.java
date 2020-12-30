@@ -1,6 +1,7 @@
 package com.training.api.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 public class TrainingPlan {
     @Id
@@ -18,9 +20,6 @@ public class TrainingPlan {
     @Column
     @NotNull
     private String name;
-
-    @OneToMany(mappedBy = "trainingPlan", cascade = CascadeType.ALL)
-    private Set<Exercise> exercises = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,21 +31,4 @@ public class TrainingPlan {
     @Column(name = "updated")
     private Date modifyDate;
 
-    public TrainingPlan() {}
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Exercise> getExercises() {
-        return exercises;
-    }
-
-    public void setExercises(Set<Exercise> exercises) {
-        this.exercises = exercises;
-    }
 }

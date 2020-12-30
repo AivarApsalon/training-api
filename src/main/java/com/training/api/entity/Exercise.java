@@ -37,10 +37,6 @@ public class Exercise {
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "training_plan_id")
-    private TrainingPlan trainingPlan;
-
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created")

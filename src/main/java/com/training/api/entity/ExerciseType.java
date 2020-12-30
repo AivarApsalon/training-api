@@ -1,11 +1,13 @@
 package com.training.api.entity;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 public class ExerciseType {
     @Id
@@ -18,20 +20,4 @@ public class ExerciseType {
 
     @OneToMany(mappedBy = "exerciseType", cascade = CascadeType.ALL)
     private Set<Exercise> exercises = new HashSet<>();
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Exercise> getExercises() {
-        return exercises;
-    }
-
-    public void setExercises(Set<Exercise> exercises) {
-        this.exercises = exercises;
-    }
 }
