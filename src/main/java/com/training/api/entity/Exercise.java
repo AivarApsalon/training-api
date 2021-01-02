@@ -1,17 +1,21 @@
 package com.training.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Data
+@NoArgsConstructor
 @Entity
-public class Exercise {
+public class Exercise implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,9 +40,9 @@ public class Exercise {
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;
 
-    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<ExerciseTrainingPlan> exercisesTrainingPlan = new HashSet<>();
+    @ManyToMany(mappedBy = "exercises")
+    @JsonBackReference
+    private List<TrainingPlan> trainingPlans;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -54,22 +58,5 @@ public class Exercise {
         this.name = name;
         this.level = level;
         this.description = description;
-    }
-
-    public Exercise() {
-    }
-
-    @Override
-    public String toString() {
-        return "Exercise{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description);
     }
 }

@@ -1,7 +1,6 @@
 package com.training.api.service;
 
 import com.training.api.entity.Exercise;
-import com.training.api.entity.ExerciseTrainingPlan;
 import com.training.api.entity.TrainingPlan;
 import com.training.api.payload.TrainingPlanRequest;
 import com.training.api.repository.ExerciseRepository;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,19 +23,21 @@ public class TrainingPlanService {
     }
 
     public TrainingPlan createTrainingPlan(TrainingPlanRequest trainingPlan) throws Exception {
-        List<ExerciseTrainingPlan> exerciseTrainingPlans = new ArrayList<>();
+//        List<ExerciseTrainingPlan> exerciseTrainingPlans = new ArrayList<>();
+        List<Exercise> exercises = new ArrayList<>();
 
         List<Integer> exercisesIds = trainingPlan.getExerciseIds();
         for (Integer exerciseId : exercisesIds) {
             Exercise exercise = this.exerciseRepository
                     .findById(exerciseId)
                     .orElseThrow(() -> new Exception("Could not find exercise with id " + exerciseId));
-            ExerciseTrainingPlan exerciseTrainingPlan = new ExerciseTrainingPlan(exercise, new Date());
-            exerciseTrainingPlans.add(exerciseTrainingPlan);
+//            ExerciseTrainingPlan exerciseTrainingPlan = new ExerciseTrainingPlan(exercise, new Date());
+//            exerciseTrainingPlans.add(exerciseTrainingPlan);
+            exercises.add(exercise);
         }
         String newTrainingPlanName = trainingPlan.getName();
 
-        TrainingPlan newTrainingPlan = new TrainingPlan(newTrainingPlanName, exerciseTrainingPlans);
+        TrainingPlan newTrainingPlan = new TrainingPlan(newTrainingPlanName, exercises);
         return this.trainingPlanRepository.save(newTrainingPlan);
     }
 

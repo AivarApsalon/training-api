@@ -1,5 +1,6 @@
 package com.training.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,9 +26,12 @@ public class TrainingPlan {
     @Column()
     private String name;
 
-    @OneToMany(mappedBy = "trainingPlan", cascade = CascadeType.ALL)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<ExerciseTrainingPlan> exercisesTrainingPlan = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "exercise_training_plan",
+            joinColumns = @JoinColumn(name = "training_plan_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"))
+    @JsonManagedReference
+    private List<Exercise> exercises;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -38,11 +43,8 @@ public class TrainingPlan {
     @Column(name = "updated")
     private Date modifyDate;
 
-    public TrainingPlan(String name, List<ExerciseTrainingPlan> exerciseTrainingPlans) {
+    public TrainingPlan(String name, List<Exercise> exercises) {
         this.name = name;
-        for(ExerciseTrainingPlan exerciseTrainingPlan : exerciseTrainingPlans) {
-            exerciseTrainingPlan.setTrainingPlan(this);
-        }
-        this.exercisesTrainingPlan = exerciseTrainingPlans;
+        this.exercises = exercises;
     }
 }

@@ -1,9 +1,7 @@
 package com.training.api.controller;
 
-import com.training.api.entity.ExerciseTrainingPlan;
 import com.training.api.entity.TrainingPlan;
 import com.training.api.payload.TrainingPlanRequest;
-import com.training.api.repository.TrainingPlanRepository;
 import com.training.api.service.TrainingPlanService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
