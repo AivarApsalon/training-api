@@ -7,8 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Data
 @Entity
@@ -28,7 +27,7 @@ public class Exercise {
     @Column(length = 5000)
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_category_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ExerciseCategory exerciseCategory;
@@ -36,6 +35,10 @@ public class Exercise {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;
+
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Set<ExerciseTrainingPlan> exercisesTrainingPlan = new HashSet<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)

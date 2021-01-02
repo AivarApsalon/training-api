@@ -20,11 +20,13 @@ public class ExerciseService {
     }
 
     public Exercise createExercise(ExerciseRequest exerciseRequest) {
-        ExerciseCategory category = this.exerciseCategoryRepository
-                .findById(exerciseRequest.getCategoryId())
-                .orElseThrow();
         Exercise exercise = new Exercise(exerciseRequest.getName(), exerciseRequest.getLevel(), exerciseRequest.getDescription());
-        exercise.setExerciseCategory(category);
+        if(exerciseRequest.getCategoryId() > 0) {
+            ExerciseCategory category = this.exerciseCategoryRepository
+                    .findById(exerciseRequest.getCategoryId())
+                    .orElseThrow();
+            exercise.setExerciseCategory(category);
+        }
         return this.exerciseRepository.save(exercise);
     }
 }
