@@ -40,4 +40,10 @@ public class TrainingPlanService {
         TrainingPlan newTrainingPlan = new TrainingPlan(newTrainingPlanName, exerciseTrainingPlans);
         return this.trainingPlanRepository.save(newTrainingPlan);
     }
+
+    public TrainingPlan getTrainingPlan(Integer id) throws Exception {
+        return this.trainingPlanRepository
+                .findById(id)
+                .orElseThrow(() -> new Exception("Could not find training plan id = " + id));
+    }
 }
