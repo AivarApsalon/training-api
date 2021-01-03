@@ -35,19 +35,25 @@ public class ExerciseService {
 
         Exercise newExercise = this.exerciseRepository.save(exercise);
 
-        ExerciseDto exerciseDto = new ExerciseDto();
-        exerciseDto.setId(newExercise.getId());
-        exerciseDto.setName(newExercise.getName());
-        exerciseDto.setLevel(newExercise.getLevel());
-        exerciseDto.setDescription(newExercise.getDescription());
-        exerciseDto.setCategoryId(newExercise.getExerciseCategory().getId());
-        exerciseDto.setCategoryName(newExercise.getExerciseCategory().getName());
-        exerciseDto.setTypeId(newExercise.getExerciseType().getId());
-        exerciseDto.setTypeName(newExercise.getExerciseType().getName());
-        exerciseDto.setCreated(newExercise.getCreateDate());
-        exerciseDto.setModified(newExercise.getModifyDate());
+        ExerciseDto exerciseDto;
+        exerciseDto = mapExerciseDto(newExercise);
 
         return exerciseDto;
+    }
+
+    public static ExerciseDto mapExerciseDto(Exercise exercise) {
+        ExerciseDto exerciseDto = new ExerciseDto();
+        exerciseDto.setId(exercise.getId());
+        exerciseDto.setName(exercise.getName());
+        exerciseDto.setLevel(exercise.getLevel());
+        exerciseDto.setDescription(exercise.getDescription());
+        exerciseDto.setCategoryId(exercise.getExerciseCategory().getId());
+        exerciseDto.setCategoryName(exercise.getExerciseCategory().getName());
+        exerciseDto.setTypeId(exercise.getExerciseType().getId());
+        exerciseDto.setTypeName(exercise.getExerciseType().getName());
+        exerciseDto.setCreated(exercise.getCreateDate());
+        exerciseDto.setModified(exercise.getModifyDate());
+        return  exerciseDto;
     }
 
     private void addCategoryToExercise(ExerciseRequest exerciseRequest, Exercise exercise) throws Exception {

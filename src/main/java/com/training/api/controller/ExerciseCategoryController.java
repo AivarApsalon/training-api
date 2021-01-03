@@ -2,6 +2,7 @@ package com.training.api.controller;
 
 import com.training.api.entity.ExerciseCategory;
 import com.training.api.entity.ExerciseType;
+import com.training.api.entity.dto.CategoryDto;
 import com.training.api.service.ExerciseCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,8 +34,8 @@ public class ExerciseCategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExerciseCategory> getById(@PathVariable Integer id) {
-        ExerciseCategory category = this.exerciseCategoryService.getById(id);
+    public ResponseEntity<CategoryDto> getById(@PathVariable Integer id) {
+        CategoryDto category = this.exerciseCategoryService.getById(id);
         return ResponseEntity.ok(category);
     }
 
