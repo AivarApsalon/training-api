@@ -40,8 +40,8 @@ public class ExerciseCategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ExerciseCategory>> getAll() {
-        List<ExerciseCategory> types = this.exerciseCategoryService.getAllCategories();
+    public ResponseEntity<List<CategoryDto>> getAll() {
+        List<CategoryDto> types = this.exerciseCategoryService.getAllCategories();
         return ResponseEntity.ok(types);
     }
 }

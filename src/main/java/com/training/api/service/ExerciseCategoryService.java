@@ -2,8 +2,10 @@ package com.training.api.service;
 
 import com.training.api.entity.Exercise;
 import com.training.api.entity.ExerciseCategory;
+import com.training.api.entity.ExerciseType;
 import com.training.api.entity.dto.CategoryDto;
 import com.training.api.entity.dto.ExerciseDto;
+import com.training.api.entity.dto.TypeDto;
 import com.training.api.repository.ExerciseCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,14 +30,29 @@ public class ExerciseCategoryService {
     public CategoryDto getById(Integer id) {
         ExerciseCategory category = this.exerciseCategoryRepository.findById(id).orElseThrow();
 
+        return mapCategoryDto(category);
+    }
+
+    public List<CategoryDto> getAllCategories() {
+        List<ExerciseCategory> categories = this.exerciseCategoryRepository.findAll();
+
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for(ExerciseCategory category : categories) {
+            CategoryDto typeDto = mapCategoryDto(category);
+            categoryDtos.add(typeDto);
+        }
+        return categoryDtos;
+    }
+
+    public static CategoryDto mapCategoryDto(ExerciseCategory category) {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
 
-        List<Exercise> categoryExercises = category.getExercises();
-        if (categoryExercises != null) {
+        List<Exercise> typeExercises = category.getExercises();
+        if (typeExercises != null) {
             List<ExerciseDto> categoryExercisesDto = new ArrayList<>();
-            for(Exercise exercise : categoryExercises) {
+            for(Exercise exercise : typeExercises) {
                 ExerciseDto exerciseDto = ExerciseService.mapExerciseDto(exercise);
                 categoryExercisesDto.add(exerciseDto);
             }
@@ -43,9 +60,5 @@ public class ExerciseCategoryService {
         }
 
         return categoryDto;
-    }
-
-    public List<ExerciseCategory> getAllCategories() {
-        return this.exerciseCategoryRepository.findAll();
     }
 }
