@@ -4,12 +4,16 @@ import com.training.api.entity.Exercise;
 import com.training.api.entity.ExerciseCategory;
 import com.training.api.entity.ExerciseType;
 import com.training.api.entity.dto.ExerciseDto;
+import com.training.api.entity.dto.TypeDto;
 import com.training.api.payload.ExerciseRequest;
 import com.training.api.repository.ExerciseCategoryRepository;
 import com.training.api.repository.ExerciseRepository;
 import com.training.api.repository.ExerciseTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ExerciseService {
@@ -74,5 +78,23 @@ public class ExerciseService {
                     .orElseThrow(() -> new Exception("Exercise type not found id = " + typeId));
             exercise.setExerciseType(type);
         }
+    }
+
+    public ExerciseDto getById(Integer id) throws Exception {
+        Exercise exercise = this.exerciseRepository
+                .findById(id)
+                .orElseThrow(() -> new Exception("Could not find exercise id = " + id));
+        return mapExerciseDto(exercise);
+    }
+
+    public List<ExerciseDto> getAll() {
+        List<Exercise> exercises = this.exerciseRepository.findAll();
+
+        List<ExerciseDto> exerciseDtos = new ArrayList<>();
+        for(Exercise exercise : exercises) {
+            ExerciseDto exerciseDto = mapExerciseDto(exercise);
+            exerciseDtos.add(exerciseDto);
+        }
+        return exerciseDtos;
     }
 }
