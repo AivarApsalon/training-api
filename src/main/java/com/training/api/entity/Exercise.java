@@ -1,10 +1,8 @@
 package com.training.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import com.sun.istack.NotNull;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,9 +10,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @Entity
+@NoArgsConstructor
+@EqualsAndHashCode
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Exercise implements Serializable {
 
     @Id
@@ -33,7 +34,6 @@ public class Exercise implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_category_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private ExerciseCategory exerciseCategory;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class Exercise implements Serializable {
     private ExerciseType exerciseType;
 
     @ManyToMany(mappedBy = "exercises")
-    @JsonBackReference
+    @JsonIgnore
     private List<TrainingPlan> trainingPlans;
 
     @CreationTimestamp

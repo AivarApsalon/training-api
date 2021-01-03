@@ -12,6 +12,7 @@ import java.util.List;
 @RequestMapping("/api/v1/exercise-type")
 public class ExerciseTypeController {
 
+    @Autowired
     private final ExerciseTypeService exerciseTypeService;
 
     @Autowired

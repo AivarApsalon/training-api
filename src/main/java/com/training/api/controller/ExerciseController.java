@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/exercise")
 public class ExerciseController {
 
+    @Autowired
     private final ExerciseService exerciseService;
 
     @Autowired
@@ -20,8 +21,7 @@ public class ExerciseController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Exercise> create(@RequestBody ExerciseRequest exercise) {
+    public ResponseEntity<Exercise> create(@RequestBody ExerciseRequest exercise) throws Exception {
         Exercise newExercise = this.exerciseService.createExercise(exercise);
         return ResponseEntity.ok(newExercise);
     }

@@ -1,6 +1,5 @@
 package com.training.api.payload;
 
-import com.sun.istack.Nullable;
 import com.training.api.entity.Level;
 import lombok.Data;
 
@@ -10,4 +9,5 @@ public class ExerciseRequest {
     private Level level;
     private String description;
     private int categoryId;
+    private int typeId;
 }

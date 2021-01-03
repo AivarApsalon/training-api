@@ -16,6 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/category")
 public class ExerciseCategoryController {
 
+    @Autowired
     private final ExerciseCategoryService exerciseCategoryService;
 
     @Autowired
@@ -32,7 +33,6 @@ public class ExerciseCategoryController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ExerciseCategory> getById(@PathVariable Integer id) {
         ExerciseCategory category = this.exerciseCategoryService.getById(id);
         return ResponseEntity.ok(category);

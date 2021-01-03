@@ -3,6 +3,7 @@ package com.training.api.controller;
 import com.training.api.entity.TrainingPlan;
 import com.training.api.payload.TrainingPlanRequest;
 import com.training.api.service.TrainingPlanService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/training-plan")
 public class TrainingPlanController {
 
+    @Autowired
     private final TrainingPlanService trainingPlanService;
 
+    @Autowired
     public TrainingPlanController(TrainingPlanService trainingPlanService) {
         this.trainingPlanService = trainingPlanService;
     }

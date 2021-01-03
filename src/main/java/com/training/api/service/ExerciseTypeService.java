@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class ExerciseTypeService {
+    @Autowired
     private final ExerciseTypeRepository exerciseTypeRepository;
 
     @Autowired

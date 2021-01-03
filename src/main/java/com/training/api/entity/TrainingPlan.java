@@ -30,7 +30,6 @@ public class TrainingPlan {
     @JoinTable(name = "exercise_training_plan",
             joinColumns = @JoinColumn(name = "training_plan_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"))
-    @JsonManagedReference
     private List<Exercise> exercises;
 
     @CreationTimestamp

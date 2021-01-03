@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class ExerciseCategoryService {
+    @Autowired
     private final ExerciseCategoryRepository exerciseCategoryRepository;
 
     @Autowired
