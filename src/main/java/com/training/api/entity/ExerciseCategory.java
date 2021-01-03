@@ -1,5 +1,7 @@
 package com.training.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
@@ -7,13 +9,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
-public class ExerciseCategory {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class ExerciseCategory implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
