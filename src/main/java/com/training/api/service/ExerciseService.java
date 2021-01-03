@@ -3,6 +3,7 @@ package com.training.api.service;
 import com.training.api.entity.Exercise;
 import com.training.api.entity.ExerciseCategory;
 import com.training.api.entity.ExerciseType;
+import com.training.api.entity.dto.ExerciseDto;
 import com.training.api.payload.ExerciseRequest;
 import com.training.api.repository.ExerciseCategoryRepository;
 import com.training.api.repository.ExerciseRepository;
@@ -26,13 +27,27 @@ public class ExerciseService {
         this.exerciseTypeRepository = exerciseTypeRepository;
     }
 
-    public Exercise createExercise(ExerciseRequest exerciseRequest) throws Exception {
+    public ExerciseDto createExercise(ExerciseRequest exerciseRequest) throws Exception {
         Exercise exercise = new Exercise(exerciseRequest.getName(), exerciseRequest.getLevel(), exerciseRequest.getDescription());
 
         addTypeToExercise(exerciseRequest, exercise);
         addCategoryToExercise(exerciseRequest, exercise);
 
-        return this.exerciseRepository.save(exercise);
+        Exercise newExercise = this.exerciseRepository.save(exercise);
+
+        ExerciseDto exerciseDto = new ExerciseDto();
+        exerciseDto.setId(newExercise.getId());
+        exerciseDto.setName(newExercise.getName());
+        exerciseDto.setLevel(newExercise.getLevel());
+        exerciseDto.setDescription(newExercise.getDescription());
+        exerciseDto.setCategoryId(newExercise.getExerciseCategory().getId());
+        exerciseDto.setCategoryName(newExercise.getExerciseCategory().getName());
+        exerciseDto.setTypeId(newExercise.getExerciseType().getId());
+        exerciseDto.setTypeName(newExercise.getExerciseType().getName());
+        exerciseDto.setCreated(newExercise.getCreateDate());
+        exerciseDto.setModified(newExercise.getModifyDate());
+
+        return exerciseDto;
     }
 
     private void addCategoryToExercise(ExerciseRequest exerciseRequest, Exercise exercise) throws Exception {

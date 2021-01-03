@@ -1,6 +1,7 @@
 package com.training.api.controller;
 
 import com.training.api.entity.Exercise;
+import com.training.api.entity.dto.ExerciseDto;
 import com.training.api.payload.ExerciseRequest;
 import com.training.api.service.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public ResponseEntity<Exercise> create(@RequestBody ExerciseRequest exercise) throws Exception {
-        Exercise newExercise = this.exerciseService.createExercise(exercise);
-        return ResponseEntity.ok(newExercise);
+    public ResponseEntity<ExerciseDto> create(@RequestBody ExerciseRequest exercise) throws Exception {
+        ExerciseDto exerciseDto = this.exerciseService.createExercise(exercise);
+        return ResponseEntity.ok(exerciseDto);
     }
 }
