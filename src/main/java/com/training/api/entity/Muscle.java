@@ -2,10 +2,13 @@ package com.training.api.entity;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 public class Muscle {
     @Id
@@ -16,13 +19,15 @@ public class Muscle {
     @NotNull
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "muscle_exercise")
-    private Exercise exercise;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "muscle_exercise",
+            joinColumns = @JoinColumn(name = "muscle_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "exercise_id", referencedColumnName = "id"))
+    private List<Exercise> exercises;
 
-    public Muscle(String name, Exercise exercise) {
+    public Muscle(String name, List<Exercise> exercises) {
         this.name = name;
-        this.exercise = exercise;
+        this.exercises = exercises;
     }
 
     public String getName() {

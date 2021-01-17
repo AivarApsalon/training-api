@@ -28,13 +28,22 @@ public class MuscleService {
     }
 
     public MuscleDto createMuscle(MuscleRequest muscleRequest) throws Exception {
-        int exerciseId = muscleRequest.getExerciseId();
-        Exercise exercise = this.exerciseRepository.findById(exerciseId)
-            .orElseThrow(() -> new Exception("Could not find related exercise with id " + exerciseId));
+        List<Exercise> exercises = new ArrayList<>();
 
-        Muscle muscle = new Muscle(muscleRequest.getName(), exercise);
+        List<Integer> exercisesIds = muscleRequest.getExerciseIds();
+        List<ExerciseDto> exerciseDtos = new ArrayList<>();
+        for (Integer exerciseId : exercisesIds) {
+            Exercise exercise = this.exerciseRepository
+                    .findById(exerciseId)
+                    .orElseThrow(() -> new Exception("Could not find exercise with id " + exerciseId));
+            ExerciseDto exerciseDto = ExerciseService.mapExerciseDto(exercise);
+            exerciseDtos.add(exerciseDto);
+            exercises.add(exercise);
+        }
 
-        Muscle savedMuscle = this.muscleRepository.save(muscle);
+        String newMuscleName = muscleRequest.getName();
+        Muscle newMuscle = new Muscle(newMuscleName, exercises);
+        Muscle savedMuscle = this.muscleRepository.save(newMuscle);
 
         return mapMuscleDto(savedMuscle);
     }
@@ -43,19 +52,23 @@ public class MuscleService {
         MuscleDto muscleDto = new MuscleDto();
         muscleDto.setId(muscle.getId());
         muscleDto.setName(muscle.getName());
+        List<Exercise> exercises = muscle.getExercises();
 
-        Exercise exercise = muscle.getExercise();
-        ExerciseDto exerciseDto = ExerciseService.mapExerciseDto(exercise);
-        List<ExerciseDto> exerciseList = new ArrayList<>();
-        exerciseList.add(exerciseDto);
-        muscleDto.setExercises(exerciseList);
+        List<ExerciseDto> exerciseDtos = new ArrayList<>();
+        for(Exercise exercise : exercises) {
+            ExerciseDto exerciseDto = ExerciseService.mapExerciseDto(exercise);
+            exerciseDtos.add(exerciseDto);
+        }
+        muscleDto.setExercises(exerciseDtos);
 
         return muscleDto;
     }
 
-    public Muscle getById(Integer id) throws Exception {
-        return this.muscleRepository.findById(id)
+    public MuscleDto getById(Integer id) throws Exception {
+        Muscle muscle = this.muscleRepository.findById(id)
                 .orElseThrow(() -> new Exception("Could not find muscle with id " + id));
+
+        return mapMuscleDto(muscle);
     }
 
     public List<Muscle> getAllCategories() {

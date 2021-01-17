@@ -40,7 +40,7 @@ public class Exercise implements Serializable {
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;
 
-    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "exercises")
     private List<Muscle> muscles;
 
     @ManyToMany(mappedBy = "exercises")

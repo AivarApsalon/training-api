@@ -31,8 +31,8 @@ public class MuscleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Muscle> getById(@PathVariable Integer id) throws Exception {
-        Muscle muscle = this.muscleService.getById(id);
+    public ResponseEntity<MuscleDto> getById(@PathVariable Integer id) throws Exception {
+        MuscleDto muscle = this.muscleService.getById(id);
         return ResponseEntity.ok(muscle);
     }
 
