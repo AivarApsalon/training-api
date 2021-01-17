@@ -2,6 +2,7 @@ package com.training.api.controller;
 
 import com.training.api.entity.Muscle;
 import com.training.api.entity.dto.CategoryDto;
+import com.training.api.entity.dto.MuscleDto;
 import com.training.api.payload.MuscleRequest;
 import com.training.api.service.MuscleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,8 @@ public class MuscleController {
     }
 
     @PostMapping
-    public ResponseEntity<Muscle> create(@RequestBody MuscleRequest muscleRequest) throws Exception {
-        Muscle newMuscle = this.muscleService.createMuscle(muscleRequest);
+    public ResponseEntity<MuscleDto> create(@RequestBody MuscleRequest muscleRequest) throws Exception {
+        MuscleDto newMuscle = this.muscleService.createMuscle(muscleRequest);
 
         return ResponseEntity.ok(newMuscle);
     }
